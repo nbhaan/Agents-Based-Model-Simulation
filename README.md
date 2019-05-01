@@ -71,7 +71,7 @@ python3 make_figure.py out-file
 The out-file is the file you created using the c++ program.
 
 ### Step 7
-7. The .png files which will be created can be found in the same folder as the out-file.
+The .png files which will be created can be found in the same folder as the out-file.
 
 
 
