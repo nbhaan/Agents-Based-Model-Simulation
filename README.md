@@ -1,5 +1,18 @@
 # Agents-Based-Model-Simulation
 
+## Prerequisites
+	
+These steps work for Mac OS X/Linux, for Windows other steps are probably necessary.
+	
+Make sure Brew is installed, follow instructions on:
+```
+https://brew.sh
+```
+That you install gcc using Brew with the following command:
+```
+brew install gcc --without-multilib
+```
+This to make sure that we can use openMP with this compiler (we need openMP to run in parallel)
 
 ## Instructions
 
@@ -31,7 +44,10 @@ The input-file is obligatory, it contains all the parameters in this order:
 - number of humans 
 - number of firms 
 - longevity of the machine
-- max price of the machine
+- time for wage
+- cost performance dependency; how much costs is defined by performance
+- type of work (can be: creative, normal, routinized)
+- price of the machine
 - quality of the machine
 - substitutable treshold
 - parallel ('true' or 'false'); not implemented yet
@@ -68,7 +84,7 @@ When installation is complete, use the following command to create the figures f
 python3 make_figure.py out-file
 ```
 
-The out-file is the file you created using the c++ program.
+The out-file is the file you created using the C++ program.
 
 ### Step 7
 The .png files which will be created can be found in the same folder as the out-file.
