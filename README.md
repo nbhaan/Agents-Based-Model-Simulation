@@ -1,18 +1,5 @@
 # Agents-Based-Model-Simulation
 
-## Prerequisites
-
-These steps work for Mac OS X/Linux, for Windows other steps are probably necessary.
-
-Make sure Brew is installed, follow instructions on:
-```
-https://brew.sh
-```
-That you install gcc using Brew with the following command:
-```
-brew install gcc --without-multilib
-```
-This to make sure that we can use openMP with this compiler (we need openMP to run in parallel)
 
 ## Instructions
 
