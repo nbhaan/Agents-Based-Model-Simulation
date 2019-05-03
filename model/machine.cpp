@@ -5,11 +5,11 @@
 
 #include "machine.h"
 
-Machine::Machine(double quality, int longevity, double maxPrice): quality(quality), longevity(longevity), 
-	costs(quality*maxPrice), performance(0)
+Machine::Machine(double quality, int longevity, double price): quality(quality), longevity(longevity), 
+	costs(price), performance(0)
 { }
 
-void Machine::use(double input, int sampleSize) {
+void Machine::use(double input) {
 	performance = performance + quality*input;
 }
 

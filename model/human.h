@@ -22,12 +22,12 @@ private:
 public:
 	Human() { };
 	Human(Parameters parameters);
-	void update(Parameters parameters, std::vector<Human> &humans, Machine &machine, int index);
+	void update(Parameters parameters, Machine &machine);
 	void print();
 	double getPerformance() const; 
 	double getComplementarity() const;
 	double getCosts() const;
-	bool isFired();
+	double getRecruitmentCosts();
 	bool operator<(const Human &h) const;
 };
 

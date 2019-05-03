@@ -15,7 +15,7 @@ private:
 public:
 	Machine(){ };
 	Machine(double quality, int longevity, double maxPrice);
-	void use(double input, int sampleSize);
+	void use(double input);
 	void resetPerformance();
 	double getPerformance();
 	int getLongevity();

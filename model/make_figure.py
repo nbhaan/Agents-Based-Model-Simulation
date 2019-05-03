@@ -8,7 +8,7 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 
 def plot_ratio(df, ax):
-	ax.plot(df['ratio'], label='Performance')
+	ax.plot(df['ratio'], label='Ratio B/C')
 
 def plot_jobs(df, ax, cols):
 	ax.plot(df[cols[0]], label='Substitutable')
@@ -32,7 +32,7 @@ def create_png(df, cols, name, xlabel, ylabel, title):
 def make_figures(file):
 	df = pd.read_csv(file, header=None, delimiter=';')
 	df.columns = ['time', 'performance', 'costs', 'ratio', 'substitutable', 'fired']
-	create_png(df, 'ratio', file[:-4] + '_perf', 'Time (Number of Iterations)', 'Average Performance', 'Average Performance over Time')
+	create_png(df, 'ratio', file[:-4] + '_ratio', 'Time (Number of Iterations)', 'Average B/C Ratio', 'Average B/C Ratio over Time')
 	create_png(df, ('substitutable', 'fired'), file[:-4] + '_jobs', 'Time (Number of Iterations)', 'Average Jobs', 'Average Jobs over Time')
 
 if __name__ == "__main__":

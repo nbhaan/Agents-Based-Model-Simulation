@@ -76,14 +76,18 @@ bool Simulator::readInput(std::string filename) {
 	getline(file, line);
 	int timeForWage = stoi(line);
 	getline(file, line);
-	double maxPriceMachine = stod(line);
+	double costsPerfDependency = stod(line);
+	getline(file, line);
+	char typeOfWork = line.at(0);
+	getline(file, line);
+	double priceMachine = stod(line);
 	getline(file, line);
 	double qualityOfTheMachine = stod(line);
 	getline(file, line);
 	double substitutableTreshold = stod(line);
 	getline(file, line);
 	bool parallel = stringToBool(line);
-	parameters = new Parameters(time, numberOfHumans, numberOfFirms, longevityMachine, timeForWage, maxPriceMachine, qualityOfTheMachine, substitutableTreshold, parallel);
+	parameters = new Parameters(time, numberOfHumans, numberOfFirms, longevityMachine, timeForWage, costsPerfDependency, typeOfWork, priceMachine, qualityOfTheMachine, substitutableTreshold, parallel);
 
 	return true;
 }

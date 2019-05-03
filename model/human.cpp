@@ -5,8 +5,16 @@
 
 #include "human.h"
 
-const double MEAN = 0.0;
-const double STANDARD_DEVIATION = 1.0;
+const double MEAN_STANDARDIZED_DIST = 0.0;
+const double STANDARDIZED_SD = 1.0;
+
+// type of jobs
+const double ROUTINIZED_MEAN = 0.8;
+const double NORMAL_MEAN = 0.5;
+const double CREATIVE_MEAN = 0.2;
+
+// job variety
+const double JOB_VARIETY = 0.2;
 
 double randomValueFromNormalDistribution(double mean, double sd) {
 	std::random_device rd; 
@@ -24,27 +32,30 @@ void setWithinSpecifiedRange(double &var, double min, double max) {
 }
 
 Human::Human(Parameters parameters) {
-	performance = randomValueFromNormalDistribution(50, 10);
-	setWithinSpecifiedRange(performance, 0, 100);
-	costs = randomValueFromNormalDistribution(2500, 500);
-	setWithinSpecifiedRange(costs, 1000, 1000000);
-	complementarity = randomValueFromNormalDistribution(0.7, 0.2);
+	performance = randomValueFromNormalDistribution(MEAN_STANDARDIZED_DIST, STANDARDIZED_SD);
+	costs = parameters.costsPerfDependency*performance + (1 - parameters.costsPerfDependency)*randomValueFromNormalDistribution(MEAN_STANDARDIZED_DIST, STANDARDIZED_SD);
+
+	switch(parameters.typeOfWork) {
+		case 'r': // routinized job
+			complementarity = randomValueFromNormalDistribution(ROUTINIZED_MEAN, JOB_VARIETY);
+			break;
+		case 'n': // normal job
+			complementarity = randomValueFromNormalDistribution(NORMAL_MEAN, JOB_VARIETY);
+			break;
+		case 'c': // creative job
+			complementarity = randomValueFromNormalDistribution(CREATIVE_MEAN, JOB_VARIETY);
+			break;
+	}
 	setWithinSpecifiedRange(complementarity, 0, 1);
-	fired = false;
 }
 
-void Human::update(Parameters parameters, std::vector<Human> &humans, Machine &machine, int index) {
+void Human::update(Parameters parameters, Machine &machine) {
 	if (complementarity > parameters.substitutableTreshold) {
-		//std::cout << "I am replaceable and still alive!" << std::endl;
-		if (machine.getPerformance() / parameters.numberOfHumans > performance) {
-			fired = true;
-		} else {
-			// reason to sabotage
-			machine.use(-abs(randomValueFromNormalDistribution(MEAN, STANDARD_DEVIATION)), parameters.numberOfHumans);
-		} 
+		// reason to sabotage
+		machine.use(-abs(randomValueFromNormalDistribution(MEAN_STANDARDIZED_DIST, STANDARDIZED_SD)));
 	} else {
-		//reason to use machine to full benefit
-		machine.use(abs(randomValueFromNormalDistribution(MEAN, STANDARD_DEVIATION)), parameters.numberOfHumans);
+		// reason to use machine to full benefit
+		machine.use(abs(randomValueFromNormalDistribution(MEAN_STANDARDIZED_DIST, STANDARDIZED_SD)));
 	}
 }
 
@@ -64,8 +75,8 @@ double Human::getCosts() const {
 	return costs;
 }
 
-bool Human::isFired() {
-	return fired;
+double Human::getRecruitmentCosts() {
+	return randomValueFromNormalDistribution(MEAN_STANDARDIZED_DIST, STANDARDIZED_SD);
 }
 
 bool Human::operator<(const Human &h) const {
