@@ -10,9 +10,8 @@ https://brew.sh
 ```
 That you install gcc using Brew with the following command:
 ```
-brew install gcc --without-multilib
+brew install gcc
 ```
-This to make sure that we can use openMP with this compiler (we need openMP to run in parallel)
 
 ## Instructions
 
@@ -43,27 +42,28 @@ The input-file is obligatory, it contains all the parameters in this order:
 - time (the length of the time period, our case this is 1000)
 - number of humans 
 - number of firms 
-- longevity of the machine
-- time for wage
+- introduction machine
 - cost performance dependency; how much costs is defined by performance
 - type of work (can be: creative, normal, routinized)
-- price of the machine
-- quality of the machine
+- costs related to the machine
+- initial performance of the machine
+- learning rate of the machine
 - substitutable treshold
-- parallel ('true' or 'false'); not implemented yet
+- job variety
+- learning rate decay of the machine
 ```
 
 You can use the 1.in file to set your input parameters or create an input file yourself.
 
 The out file is not obligatory, you can use this argument if you would like to specify a name for output file. If no name is specified it will be the same name as the input file with a .out extension.
 
-Note that once you specify for a 1000 simulations, it will take some time for the program to terminate. Therefore, a parallel implementation is coming up.
+Note that once you specify for a 1000 simulations, it will take some time for the program to terminate.
 
 ### Step 4
 Once the program is finished your output file will be created in the same folder as the input-file. The columns in your outfile will look like this:
 
 ```
-time; performance; costs; performance/costs ratio; number of people who are substitutable; number of people fired
+time; avg performance; avg costs; avg number of people who are substitutable; avg number of people fired; avg machine performance
 ```
 
 ### Step 5
