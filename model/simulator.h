@@ -21,9 +21,9 @@ private:
 	std::vector<Firm> firms;
 	std::vector<double> avgPerformances;
 	std::vector<double> avgCosts;
-	std::vector<double> avgBenefitCostRatio;
 	std::vector<double> avgNumberOfPeopleSubstitutable;
 	std::vector<double> avgNumberOfPeopleFired;
+	std::vector<double> avgMachinePerformance;
 	void initFirms();
 public:
 	Simulator() { };

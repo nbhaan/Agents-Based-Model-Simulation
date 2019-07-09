@@ -8,17 +8,15 @@
 
 class Machine {
 private:
-	double quality;
-	int longevity;
-	double costs;
+	double learningRate;
 	double performance;
+	double costs;
+	double learningRateDecay;
 public:
 	Machine(){ };
-	Machine(double quality, int longevity, double maxPrice);
+	Machine(double learningRate, double performance, double costs, double learningRateDecay);
 	void use(double input);
-	void resetPerformance();
 	double getPerformance();
-	int getLongevity();
 	double getCosts();
 };
 

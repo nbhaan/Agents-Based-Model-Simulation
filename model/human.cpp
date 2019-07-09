@@ -13,9 +13,6 @@ const double ROUTINIZED_MEAN = 0.8;
 const double NORMAL_MEAN = 0.5;
 const double CREATIVE_MEAN = 0.2;
 
-// job variety
-const double JOB_VARIETY = 0.2;
-
 double randomValueFromNormalDistribution(double mean, double sd) {
 	std::random_device rd; 
 	std::mt19937 gen(rd()); 
@@ -33,17 +30,17 @@ void setWithinSpecifiedRange(double &var, double min, double max) {
 
 Human::Human(Parameters parameters) {
 	performance = randomValueFromNormalDistribution(MEAN_STANDARDIZED_DIST, STANDARDIZED_SD);
-	costs = parameters.costsPerfDependency*performance + (1 - parameters.costsPerfDependency)*randomValueFromNormalDistribution(MEAN_STANDARDIZED_DIST, STANDARDIZED_SD);
+	costs = parameters.costsPerfDependency*-performance + (1 - parameters.costsPerfDependency)*randomValueFromNormalDistribution(MEAN_STANDARDIZED_DIST, STANDARDIZED_SD);
 
 	switch(parameters.typeOfWork) {
 		case 'r': // routinized job
-			complementarity = randomValueFromNormalDistribution(ROUTINIZED_MEAN, JOB_VARIETY);
+			complementarity = randomValueFromNormalDistribution(ROUTINIZED_MEAN, parameters.jobVariety);
 			break;
 		case 'n': // normal job
-			complementarity = randomValueFromNormalDistribution(NORMAL_MEAN, JOB_VARIETY);
+			complementarity = randomValueFromNormalDistribution(NORMAL_MEAN, parameters.jobVariety);
 			break;
 		case 'c': // creative job
-			complementarity = randomValueFromNormalDistribution(CREATIVE_MEAN, JOB_VARIETY);
+			complementarity = randomValueFromNormalDistribution(CREATIVE_MEAN, parameters.jobVariety);
 			break;
 	}
 	setWithinSpecifiedRange(complementarity, 0, 1);
@@ -52,10 +49,10 @@ Human::Human(Parameters parameters) {
 void Human::update(Parameters parameters, Machine &machine) {
 	if (complementarity > parameters.substitutableTreshold) {
 		// reason to sabotage
-		machine.use(-abs(randomValueFromNormalDistribution(MEAN_STANDARDIZED_DIST, STANDARDIZED_SD)));
+		machine.use(-abs(randomValueFromNormalDistribution(MEAN_STANDARDIZED_DIST, STANDARDIZED_SD))/parameters.numberOfHumans);
 	} else {
 		// reason to use machine to full benefit
-		machine.use(abs(randomValueFromNormalDistribution(MEAN_STANDARDIZED_DIST, STANDARDIZED_SD)));
+		machine.use(abs(randomValueFromNormalDistribution(MEAN_STANDARDIZED_DIST, STANDARDIZED_SD))/parameters.numberOfHumans);
 	}
 }
 
@@ -76,7 +73,7 @@ double Human::getCosts() const {
 }
 
 double Human::getRecruitmentCosts() {
-	return randomValueFromNormalDistribution(MEAN_STANDARDIZED_DIST, STANDARDIZED_SD);
+	return abs(randomValueFromNormalDistribution(MEAN_STANDARDIZED_DIST, STANDARDIZED_SD));
 }
 
 bool Human::operator<(const Human &h) const {

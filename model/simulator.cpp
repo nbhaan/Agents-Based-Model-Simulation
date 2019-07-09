@@ -34,9 +34,9 @@ void Simulator::run() {
 	int progress = 0;
 	avgPerformances.resize(parameters->time);
 	avgCosts.resize(parameters->time);
-	avgBenefitCostRatio.resize(parameters->time);
 	avgNumberOfPeopleSubstitutable.resize(parameters->time);
 	avgNumberOfPeopleFired.resize(parameters->time);
+	avgMachinePerformance.resize(parameters->time);
 
 	initFirms();
 
@@ -46,9 +46,9 @@ void Simulator::run() {
 			firms[i].nextIteration(*parameters);
 			avgPerformances[t] += firms[i].getPerformance() / parameters->numberOfFirms;
 			avgCosts[t] += firms[i].getCosts() / parameters->numberOfFirms;
-			avgBenefitCostRatio[t] += firms[i].getBenefitCostRatio() / parameters->numberOfFirms;
 			avgNumberOfPeopleSubstitutable[t] += (double)firms[i].getNumberOfPeopleSubstitutable() / parameters->numberOfFirms;
 			avgNumberOfPeopleFired[t] += (double)firms[i].getNumberOfPeopleFired() / parameters->numberOfFirms;
+			avgMachinePerformance[t] += firms[i].getMachinePerformance() / parameters->numberOfFirms;
 		}
 		progress++;
 		std::cout << "\r" << std::fixed << std::setprecision(2) << "Progress: " << (double)progress/parameters->time * 100 << "%   " << std::flush;
@@ -72,22 +72,24 @@ bool Simulator::readInput(std::string filename) {
 	getline(file, line);
 	int numberOfFirms = stoi(line);
 	getline(file, line);
-	int longevityMachine = stoi(line);
-	getline(file, line);
-	int timeForWage = stoi(line);
+	int introMachine = stoi(line);
 	getline(file, line);
 	double costsPerfDependency = stod(line);
 	getline(file, line);
 	char typeOfWork = line.at(0);
 	getline(file, line);
-	double priceMachine = stod(line);
+	double costsMachine = stod(line);
 	getline(file, line);
-	double qualityOfTheMachine = stod(line);
+	double initPerfMachine = stod(line);
+	getline(file, line);
+	double learningRateOfTheMachine = stod(line);
 	getline(file, line);
 	double substitutableTreshold = stod(line);
 	getline(file, line);
-	bool parallel = stringToBool(line);
-	parameters = new Parameters(time, numberOfHumans, numberOfFirms, longevityMachine, timeForWage, costsPerfDependency, typeOfWork, priceMachine, qualityOfTheMachine, substitutableTreshold, parallel);
+	double jobVariety = stod(line);
+	getline(file, line);
+	double learningRateDecay = stod(line);
+	parameters = new Parameters(time, numberOfHumans, numberOfFirms, introMachine, costsPerfDependency, typeOfWork, costsMachine, initPerfMachine, learningRateOfTheMachine, substitutableTreshold, jobVariety, learningRateDecay);
 
 	return true;
 }
@@ -97,7 +99,7 @@ void Simulator::saveOutput(std::string filename) {
 	output.open(filename);
 
 	for (int t=0; t<parameters->time; t++) {
-		output << std::fixed << std::setprecision(4) << t << "; " << avgPerformances[t] << "; " << avgCosts[t] << "; " << avgBenefitCostRatio[t] << "; " << avgNumberOfPeopleSubstitutable[t] << "; " << avgNumberOfPeopleFired[t] << std::endl;
+		output << std::fixed << std::setprecision(4) << t << "; " << avgPerformances[t] << "; " << avgCosts[t] << "; " << avgNumberOfPeopleSubstitutable[t] << "; " << avgNumberOfPeopleFired[t] << "; " << avgMachinePerformance[t] << std::endl;
 	}
 	std::cout << filename << " created." << std::endl;
 }

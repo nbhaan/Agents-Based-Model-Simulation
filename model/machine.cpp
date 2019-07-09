@@ -4,25 +4,19 @@
 */ 
 
 #include "machine.h"
+#include <iostream>
 
-Machine::Machine(double quality, int longevity, double price): quality(quality), longevity(longevity), 
-	costs(price), performance(0)
+Machine::Machine(double learningRate, double performance, double costs, double learningRateDecay): learningRate(learningRate), 
+	performance(performance), costs(costs), learningRateDecay(learningRateDecay)
 { }
 
 void Machine::use(double input) {
-	performance = performance + quality*input;
-}
-
-void Machine::resetPerformance() {
-	performance = 0;
+	performance = performance + learningRate*input;
+	learningRate = learningRate*(1 - learningRateDecay);
 }
 
 double Machine::getPerformance() {
 	return performance;
-}
-
-int Machine::getLongevity() {
-	return longevity;
 }
 
 double Machine::getCosts() {

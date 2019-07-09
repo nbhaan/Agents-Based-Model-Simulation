@@ -18,7 +18,6 @@ private:
 	double performance;
 	double costs;
 	double complementarity;
-	bool fired;
 public:
 	Human() { };
 	Human(Parameters parameters);

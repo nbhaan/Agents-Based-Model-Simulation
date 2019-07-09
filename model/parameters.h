@@ -11,17 +11,18 @@ public:
 	const int time;
 	const int numberOfHumans;
 	const int numberOfFirms;
-	const int longevityMachine;
-	const int timeForWage;
+	const int introMachine;
 	const double costsPerfDependency;
 	const char typeOfWork;
-	const double priceMachine;
-	const double qualityOfTheMachine;
+	const double costsMachine;
+	const double initPerfMachine;
+	const double learningRateOfTheMachine;
 	const double substitutableTreshold;
-	const bool parallel;
+	const double jobVariety;
+	const double learningRateDecay;
 
-	Parameters(int time, int numberOfHumans, int numberOfFirms, int longevityMachine, int timeForWage, double costsPerfDependency, 
-		char typeOfWork, double priceMachine, double qualityOfTheMachine, double substitutableTreshold, bool parallel);
+	Parameters(int time, int numberOfHumans, int numberOfFirms, int introMachine, double costsPerfDependency, char typeOfWork, double costsMachine, 
+		double initPerfMachine, double learningRateOfTheMachine, double substitutableTreshold, double jobVariety, double learningRateDecay);
 };
 
 #endif
